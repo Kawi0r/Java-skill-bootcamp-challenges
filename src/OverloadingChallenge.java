@@ -1,27 +1,44 @@
 public class OverloadingChallenge {
+    private static final String INVALID_VALUE_MESSAGE = "Invalid value";
+
     public static void main(String[] args) {
-        int checker = getDurationString(5000);
-        if (checker < 0) {
-            System.out.println("Invalid input");
-        }
+        String checker = getDurationString(5000);
+        System.out.println(checker);
+        checker = getDurationString(422);
+        System.out.println(checker);
     }
-    public static int getDurationString(int min, int sec) {
+    public static String getDurationString(long min, long sec) {
         if ( min < 0 || sec < 0 || sec > 59) {
-            return -1;
+            return INVALID_VALUE_MESSAGE;
         } else {
-            int hours = min / 60;
-            int remainingHours = min % 60;
-            System.out.println(hours + "h: " + remainingHours + "min : " + sec + "sec");
-            return 1;
+            long hours = min / 60;
+            long remainingMinutes = min % 60;
+
+            String hoursString = hours + "h";
+            if (hours < 10) {
+                hoursString = "0" + hoursString;
+            }
+
+            String minutesString = remainingMinutes + "m";
+            if (remainingMinutes < 10) {
+                minutesString = "0" + minutesString;
+            }
+
+            String secondString = sec + "s";
+            if (sec < 10) {
+                secondString = "0" + secondString;
+            }
+
+            return hoursString + ": " + minutesString + ": " + secondString;
         }
     }
 
-    public static int getDurationString(int sec) {
+    public static String getDurationString(long sec) {
         if (sec < 0) {
-            return -1;
+            return INVALID_VALUE_MESSAGE;
         } else {
-            int minutes = sec / 60;
-            int remainingSec = sec % 60;
+            long minutes = sec / 60;
+            long remainingSec = sec % 60;
             System.out.println(sec + "sec = " + minutes + "min + " + remainingSec + "sec");
             return getDurationString(minutes, remainingSec);
         }
